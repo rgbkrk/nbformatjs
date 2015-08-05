@@ -1,0 +1,25 @@
+{
+  "name": "nbformat",
+  "version": "0.0.0",
+  "description": "Reference implementation of the Jupyter Notebook format",
+  "main": "nbformat.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgbkrk/nbformatjs.git"
+  },
+  "keywords": [
+    "nbformat",
+    "jupyter",
+    "notebook",
+    "format"
+  ],
+  "author": "Kyle Kelley",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/rgbkrk/nbformatjs/issues"
+  },
+  "homepage": "https://github.com/rgbkrk/nbformatjs#readme"
+}
