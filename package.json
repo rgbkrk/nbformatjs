@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/rgbkrk/nbformatjs/issues"
   },
-  "homepage": "https://github.com/rgbkrk/nbformatjs#readme"
+  "homepage": "https://github.com/rgbkrk/nbformatjs#readme",
+  "dependencies": {
+    "jsonschema": "^1.0.2"
+  }
 }
