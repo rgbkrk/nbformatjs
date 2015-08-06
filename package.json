@@ -1,6 +1,6 @@
 {
   "name": "nbformat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reference implementation of the Jupyter Notebook format",
   "main": "nbformat.js",
   "scripts": {
