@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/rgbkrk/nbformatjs#readme",
   "dependencies": {
-    "jsonschema": "^1.0.2"
+    "tv4": "^1.1.12"
   }
 }
