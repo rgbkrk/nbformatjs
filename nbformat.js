@@ -25,7 +25,7 @@ nbv = new NotebookValidator();
 
 var fs = require('fs');
 var nbModel = JSON.parse(fs.readFileSync("tests/test4.ipynb", 'utf8'));
-nbv.validate(nbModel)
+nbv.validateNotebook(nbModel)
 */
 
 module.exports = NotebookValidator;
