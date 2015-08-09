@@ -32,6 +32,13 @@ NotebookValidator.prototype.validateNotebook = function (notebook) {
 };
 
 NotebookValidator.prototype.isValid = function (notebook) {
+    if (! notebook.nbformat) {
+        return false;
+    }
+
+    if (notebook.nbformat !== 3 && notebook.nbformat !== 4){
+        return false;
+    }
     return this.ajv.validate('/v' + notebook.nbformat, notebook);
 };
 
@@ -41,11 +48,34 @@ var fs = require('fs');
 
 nbv = new NotebookValidator();
 
-nbv.validateNotebook(JSON.parse(fs.readFileSync("tests/test1.ipynb", 'utf8')));
-nbv.validateNotebook(JSON.parse(fs.readFileSync("tests/test2.ipynb", 'utf8')));
-nbv.validateNotebook(JSON.parse(fs.readFileSync("tests/test3.ipynb", 'utf8')));
-nbv.validateNotebook(JSON.parse(fs.readFileSync("tests/test4.ipynb", 'utf8')));
-nbv.validateNotebook(JSON.parse(fs.readFileSync("tests/invalid.ipynb", 'utf8')));
+testFilenames = [
+    "tests/test2.ipynb",
+    "tests/test3.ipynb",
+    "tests/test4.ipynb",
+    "tests/test4plus.ipynb",
+    "tests/invalid.ipynb",
+]
+
+notebooks = {}
+
+testFilenames.forEach(function(item) {
+    rawJSON = fs.readFileSync(item);
+    notebooks[item] = JSON.parse(rawJSON);
+});
+
+nbv.isValid(notebooks["tests/test2.ipynb"])
+nbv.isValid(notebooks["tests/test3.ipynb"])
+nbv.isValid(notebooks["tests/test4.ipynb"])
+nbv.isValid(notebooks["tests/test4plus.ipynb"])
+nbv.isValid(notebooks["tests/invalid.ipynb"])
+
+
+nbv.validateNotebook(notebooks["tests/test2.ipynb"])
+nbv.validateNotebook(notebooks["tests/test3.ipynb"])
+nbv.validateNotebook(notebooks["tests/test4.ipynb"])
+nbv.validateNotebook(notebooks["tests/test4plus.ipynb"])
+nbv.validateNotebook(notebooks["tests/invalid.ipynb"])
+
 */
 
 module.exports = NotebookValidator;
