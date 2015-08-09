@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/rgbkrk/nbformatjs#readme",
   "dependencies": {
-    "ajv": "^0.6.13"
+    "ajv": "^0.6.13",
+    "jayschema": "^0.3.1"
   }
 }
