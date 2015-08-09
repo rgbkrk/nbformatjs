@@ -4,6 +4,10 @@ var JaySchema = require('jayschema');
 var v3Schema = require('./v3/nbformat.v3.schema.json');
 var v4Schema = require('./v4/nbformat.v4.schema.json');
 
+/**
+ * NotebookValidator inherits from JaySchema for verbosity and composes ajv for
+ * optional speed.
+ */
 function NotebookValidator() {
     JaySchema.call(this);
 
@@ -31,8 +35,15 @@ NotebookValidator.prototype.validateNotebook = function (notebook) {
     return this.validate(notebook, '/v' + notebook.nbformat);
 };
 
+/**
+ * isValid returns whether or not this is a strictly conforming notebook
+ * @param  {Object}  notebook Notebook object to validate
+ * @return {Boolean}          notebook was strictly conforming to a schema
+ */
 NotebookValidator.prototype.isValid = function (notebook) {
-    if (! notebook.nbformat) {
+    // Super wrong if not an Object
+    // Bad if nbformat not there
+    if (!notebook || !notebook.nbformat) {
         return false;
     }
 
