@@ -1,13 +1,13 @@
-var Validator = require('jsonschema').Validator;
+var Ajv = require('ajv');
 var v3Schema = require('./v3/nbformat.v3.schema.json');
 var v4Schema = require('./v4/nbformat.v4.schema.json');
 
 function NotebookValidator() {
-    Validator.call(this);
+    Ajv.call(this);
     this.addSchema(v3Schema, '/v3');
     this.addSchema(v4Schema, '/v4');
 }
-NotebookValidator.prototype = Object.create(Validator.prototype);
+NotebookValidator.prototype = Object.create(Ajv.prototype);
 
 
 /**
@@ -16,7 +16,7 @@ NotebookValidator.prototype = Object.create(Validator.prototype);
  * @return {bool}            Validity
  */
 NotebookValidator.prototype.validateNotebook = function (notebook) {
-    return this.validate(notebook, '/v' + notebook.nbformat);
+    return this.validate('/v' + notebook.nbformat, notebook);
 };
 
 /**
