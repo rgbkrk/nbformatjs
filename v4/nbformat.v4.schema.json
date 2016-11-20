@@ -59,6 +59,23 @@
                     "description": "Original notebook format (major number) before converting the notebook between versions. This should never be written to a file.",
                     "type": "integer",
                     "minimum": 1
+                },
+                "title": {
+                    "description": "The title of the notebook document",
+                    "type": "string"
+                },
+                "authors": {
+                    "description": "The author(s) of the notebook document",
+                    "type": "array",
+                    "item": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": true
+                    }
                 }
             }
         },
@@ -113,6 +130,7 @@
                         "tags": {"$ref": "#/definitions/misc/metadata_tags"}
                     }
                 },
+                "attachments": {"$ref": "#/definitions/misc/attachments"},
                 "source": {"$ref": "#/definitions/misc/source"}
             }
         },
@@ -136,6 +154,7 @@
                     },
                     "additionalProperties": true
                 },
+                "attachments": {"$ref": "#/definitions/misc/attachments"},
                 "source": {"$ref": "#/definitions/misc/source"}
             }
         },
@@ -180,7 +199,7 @@
                 }
             }
         },
-        
+
         "unrecognized_cell": {
             "description": "Unrecognized cell from a future minor-revision to the notebook format.",
             "type": "object",
@@ -204,7 +223,7 @@
                 }
             }
         },
-        
+
         "output": {
             "type": "object",
             "oneOf": [
@@ -314,7 +333,7 @@
 
         "misc": {
             "metadata_name": {
-                "description": "The cell's name. If present, must be a non-empty string.",
+                "description": "The cell's name. If present, must be a non-empty string. Must be unique across all the cells of a given notebook.",
                 "type": "string",
                 "pattern": "^.+$"
             },
@@ -325,6 +344,16 @@
                 "items": {
                     "type": "string",
                     "pattern": "^[^,]+$"
+                }
+            },
+            "attachments": {
+                "description": "Media attachments (e.g. inline images), stored as mimebundle keyed by filename.",
+                "type": "object",
+                "patternProperties": {
+                    ".*": {
+                        "description": "The attachment's data stored as a mimebundle.",
+                        "$ref": "#/definitions/misc/mimebundle"
+                    }
                 }
             },
             "source": {
@@ -339,16 +368,13 @@
             "mimebundle": {
                 "description": "A mime-type keyed dictionary of data",
                 "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "application/json": {
-                        "type": "object"
-                    }
+                "additionalProperties": {
+                  "description": "mimetype output (e.g. text/plain), represented as either an array of strings or a string.",
+                  "$ref": "#/definitions/misc/multiline_string"
                 },
                 "patternProperties": {
-                    "^(?!application/json$)[a-zA-Z0-9]+/[a-zA-Z0-9\\-\\+\\.]+$": {
-                        "description": "mimetype output (e.g. text/plain), represented as either an array of strings or a string.",
-                        "$ref": "#/definitions/misc/multiline_string"
+                    "^application/([a-zA-Z0-9.]+\\+)?json$": {
+                        "description": "Mimetypes with JSON output, can be any type"
                     }
                 }
             },
